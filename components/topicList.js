@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const getTopics = async () => {
     try {
-        const res = await fetch("http://localhost:3000/api/topics", {
+        const res = await fetch("http://mba-test.vercel.app/api/topics", {
             cache:"no-store",
         });
         if(res.ok) {
