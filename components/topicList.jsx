@@ -27,7 +27,7 @@ export default async function TopicErList() {
         <>
             {topics.map((t) => (
                 <div className="flex justify-between items-center p-4 my-3 bg-linear-to-r from-slate-400 to-slate-500 rounded-2xl text-black" key={t._id}>
-                    <Link href={`http://localhost:3000/singleTopic/${t._id}`}>
+                    <Link href={`/singleTopic/${t._id}`}>
                     <div>
                         <h3 className="text-[15px] font-light">{t.title}</h3>
                         <p className="font-light">{t.description}</p>
