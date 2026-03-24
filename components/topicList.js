@@ -20,8 +20,9 @@ const getTopics = async () => {
 }
 
 export default async function TopicErList() {
-
-    const {topics} = await getTopics();
+    const data = await getTopics();
+    const topics = data?.topics || [];
+    // const {topics} = await getTopics();
 
     return(
         <>
