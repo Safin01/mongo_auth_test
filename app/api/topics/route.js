@@ -1,6 +1,7 @@
 import ConnectMongoDB from "@/libs/mongodb";
 import Topic from "@/models/topic";
 import { NextResponse } from "next/server";
+import { getPosts } from "@/server/getPosts";
 
 export async function POST(request) {
     const {title, description} = await request.json();
@@ -10,8 +11,7 @@ export async function POST(request) {
 }
 
 export async function GET() {
-    await ConnectMongoDB();
-    const topics = await Topic.find();
+    const topics = getPosts();
     return NextResponse.json({topics});
 }
 

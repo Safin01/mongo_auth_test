@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { editPost } from "@/server/editPost";
 
 export default function EditForm({id, title, description}){
     const [newTitle, setNewTitle] = useState(title);
@@ -10,22 +11,13 @@ export default function EditForm({id, title, description}){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics/${id}`, {
-                method:"PUT",
-                headers: {
-                    "Content-type":"application/json",
-                },
-                body: JSON.stringify({newTitle, newDescription})
-            })
+            await editPost({id, title: newTitle, description: newDescription});
 
-            if(!res.ok) {
-                throw new Error("Could not update topic");
-            }
         } catch (error) {
             console.log("Could not update topic");
         }
         router.refresh();
-        router.push("/");
+        router.push("/")
     }
 
     return(

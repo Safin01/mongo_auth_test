@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { uploadPost } from "@/server/uploadPost";
 
 export default function AddTopic() {
     const [title, setTitle] = useState("");
@@ -16,19 +17,8 @@ export default function AddTopic() {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`, {
-                method:"POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify({title,description})
-            })
-
-            if(res) {
-                router.push("/");
-            } else {
-                throw new Error("Cannot add topic");
-            }
+            await uploadPost({title, description})
+            router.push("/");
         } catch (error) {
             throw new Error("Cannot add topic")
         }

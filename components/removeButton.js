@@ -1,4 +1,5 @@
 "use client";
+import { deletePost } from "@/server/deletePost";
 import { useRouter } from "next/navigation";
 import { HiOutlineTrash } from "react-icons/hi";
 
@@ -8,14 +9,10 @@ export default function Remove({id}) {
     const removeTopic = async () => {
         const confirmed = confirm("Are you sure to delete this topic?");
         if (confirmed) {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics?id=${id}`, {
-                method:"DELETE",
-            });
-            if (res) {
-                router.refresh();
-            } else {
-                throw new Error("Could not delete topic");
-            }
+            await deletePost({id});
+            router.refresh();
+        } else {
+            return;
         }
     }
 

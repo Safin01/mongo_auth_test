@@ -2,28 +2,29 @@
 import { HiPencilAlt } from "react-icons/hi";
 import Remove from "@/components/removeButton";
 import Link from "next/link";
+import { getPosts } from "@/server/getPosts";
 
 const getTopics = async () => {
+    var res = {};
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`, {
-            cache:"no-store",
-        });
-        return res.json();
-    } catch (error) {
-        console.log("error fetching topics", error);
-    }
+         res = await getPosts();
+         
+        } catch (error) {
+            console.log("error fetching topics", error);
+        }
+    return res;
 }
 
 export default async function TopicErList() {
-    const data = await getTopics();
-    const topics = data?.topics || [];
+   
+    const topics = await getTopics();
     // const {topics} = await getTopics();
 
     return(
         <>
             {topics.map((t) => (
-                <div className="flex justify-between items-center p-4 my-3 bg-linear-to-r from-slate-400 to-slate-500 rounded-2xl text-black" key={t._id}>
-                    <Link href={`/singleTopic/${t._id}`}>
+                <div className="flex justify-between items-center p-4 my-3 bg-linear-to-r from-slate-400 to-slate-500 rounded-2xl text-black" key={t._id.toString()}>
+                    <Link href={`/singleTopic/${t._id.toString()}`}>
                     <div>
                         <h3 className="text-[15px] font-light">{t.title}</h3>
                         <p className="font-light">{t.description}</p>
@@ -31,8 +32,8 @@ export default async function TopicErList() {
                     </div>
                     </Link>
                     <div className="flex gap-3">
-                        <Remove id={t._id}/>
-                        <Link href={`/editTopic/${t._id}`}>
+                        <Remove id={t._id.toString()}/>
+                        <Link href={`/editTopic/${t._id.toString()}`}>
                             <HiPencilAlt size={24}/>
                         </Link>
                     </div>
