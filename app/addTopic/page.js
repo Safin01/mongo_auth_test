@@ -16,7 +16,7 @@ export default function AddTopic() {
         }
 
         try {
-            const res = await fetch("http://mba-test.vercel.app/api/topics", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`, {
                 method:"POST",
                 headers: {
                     "Content-type": "application/json",

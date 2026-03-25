@@ -8,7 +8,7 @@ export default function Remove({id}) {
     const removeTopic = async () => {
         const confirmed = confirm("Are you sure to delete this topic?");
         if (confirmed) {
-            const res = await fetch(`http://mba-test.vercel.app/api/topics?id=${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics?id=${id}`, {
                 method:"DELETE",
             });
             if (res) {

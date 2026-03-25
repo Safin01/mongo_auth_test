@@ -5,15 +5,10 @@ import Link from "next/link";
 
 const getTopics = async () => {
     try {
-        const res = await fetch("http://mba-test.vercel.app/api/topics", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`, {
             cache:"no-store",
         });
-        if(res.ok) {
-            return res.json();
-        } else {
-            throw new Error("could not fetch topics");
-        }
-        
+        return res.json();
     } catch (error) {
         console.log("error fetching topics", error);
     }

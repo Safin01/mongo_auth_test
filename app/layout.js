@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-import {Analytics} from "@vercel/analytics/next";
+// import {Analytics} from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,11 +24,11 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex flex-col max-w-2xl mx-auto mt-3">
+      <body className="flex flex-col max-w-2xl mx-auto mt-25">
         <Navbar/>
         {children}
       </body>
-      <Analytics/>
+      {/* <Analytics/> */}
     </html>
   );
 }

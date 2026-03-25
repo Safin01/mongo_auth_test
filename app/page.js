@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic"; 
 
 import TopicErList from "@/components/topicList";
 
