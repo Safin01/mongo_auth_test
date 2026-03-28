@@ -2,16 +2,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { editPost } from "@/server/editPost";
+import { authClient } from "@/libs/auth-client";
 
 export default function EditForm({id, title, description}){
     const [newTitle, setNewTitle] = useState(title);
     const [newDescription, setNewDescription] = useState(description);
     const router = useRouter();
+    const userId = authClient.useSession().data?.user?.id;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await editPost({id, title: newTitle, description: newDescription});
+            await editPost({id, title: newTitle, description: newDescription, userId});
 
         } catch (error) {
             console.log("Could not update topic");
