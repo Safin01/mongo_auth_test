@@ -3,11 +3,15 @@ import { HiPencilAlt } from "react-icons/hi";
 import Remove from "@/components/removeButton";
 import Link from "next/link";
 import { getPosts } from "@/server/getPosts";
+import {auth} from "@/libs/auth";
+import { headers } from "next/headers";
 
-const getTopics = async () => {
-    var res = {};
+const getTopics = async (session : any) => {
+    if (!session || !session.user) return [];
+    // const {data: session} = await authClient.getSession();
+    var res: any[] = [];
     try {
-         res = await getPosts();
+        res =  await getPosts(session.user.id);
          
         } catch (error) {
             console.log("error fetching topics", error);
@@ -17,12 +21,15 @@ const getTopics = async () => {
 
 export default async function TopicErList() {
    
-    const topics = await getTopics();
     // const {topics} = await getTopics();
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    })
+    const topics = await getTopics(session);
 
     return(
-        <>
-            {topics.map((t) => (
+        <> {session ? (
+            (topics.map((t) => (
                 <div className="flex justify-between items-center p-4 my-3 bg-linear-to-r from-slate-400 to-slate-500 rounded-2xl text-black" key={t._id.toString()}>
                     <Link href={`/singleTopic/${t._id.toString()}`}>
                     <div>
@@ -38,7 +45,12 @@ export default async function TopicErList() {
                         </Link>
                     </div>
                 </div>
-            ))}
+                ))
+            )
+            ):(
+                <p>Sign in to see topic list</p>
+            )
+        }
         </>
     );
 }

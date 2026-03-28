@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { uploadPost } from "@/server/uploadPost";
+import { authClient } from "@/libs/auth-client";
 
 export default function AddTopic() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const router = useRouter();
+    const {data: session} = authClient.useSession();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +19,7 @@ export default function AddTopic() {
         }
 
         try {
-            await uploadPost({title, description})
+            await uploadPost({title, description, userId: session.user.id});
             router.push("/");
         } catch (error) {
             throw new Error("Cannot add topic")

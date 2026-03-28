@@ -2,6 +2,10 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "target": "ES2022",         // Must be ES2017 or higher
+    "module": "ESNext",         // Or 'NodeNext', 'Node16', etc.
+    "moduleResolution": "node", // Ensures it finds your modules correctly
+    "lib": ["ES2022"]
   }
 }

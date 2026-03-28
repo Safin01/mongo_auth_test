@@ -4,6 +4,8 @@ import TopicErList from "@/components/topicList";
 
 export default function Home() {
   return (
-    <TopicErList/>
+    <div>
+      <TopicErList/>
+    </div>
   );
 }
